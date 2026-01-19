@@ -43,3 +43,90 @@ Clone the repository and install it into a virtual environment:
 ```bash
 pip install -e .
 ```
+
+Or install it from another project in editable mode:
+
+```bash
+pip install -e /path/to/w3c-validator
+```
+
+This registers the `w3c-validator` command via a console script entry point.
+
+---
+
+## Usage
+
+### Validate one or more URLs
+
+```bash
+w3c-validator https://example.com https://example.com/about/
+```
+
+### Read URLs from a file
+
+```bash
+w3c-validator -r urls.txt
+```
+
+File rules:
+
+- one URL per line
+- blank lines ignored
+- lines starting with `#` are ignored
+
+Example `urls.txt`:
+
+```text
+# Home page
+https://example.com/
+
+# Resource list
+https://example.com/resources/
+```
+
+---
+
+### Write a full report to a file
+
+```bash
+w3c-validator -r urls.txt -o report.txt
+```
+
+The report includes:
+
+- a delimiter per URL
+- error / info counts
+- full error messages with HTML extracts
+
+---
+
+## Exit codes
+
+| Code | Meaning                                             |
+| ---: | --------------------------------------------------- |
+|    0 | No validation errors found                          |
+|    1 | One or more URLs contain validation errors          |
+|    2 | Invalid input (missing URLs, unreadable file, etc.) |
+
+This allows quick pass/fail checks:
+
+```bash
+w3c-validator -r urls.txt
+echo $?
+```
+
+---
+
+## Requirements
+
+- Python 3.10+
+- `requests`
+
+---
+
+## Licence
+
+MIT Licence.
+
+This project is provided as-is, without warranty.
+See the `LICENSE` file for details.
