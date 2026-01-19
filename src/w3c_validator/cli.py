@@ -298,7 +298,7 @@ def write_full_report(
                 fh.write(f"- ERROR{location}: {text}\n")
 
                 if extract:
-                    fh.write(f"  Extract:\n")
+                    fh.write(f"  Markup Extract:\n")
                     for line in extract.splitlines():
                         fh.write(f"    {line}\n")
                 fh.write("\n")
