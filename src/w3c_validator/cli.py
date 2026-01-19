@@ -45,7 +45,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
         "--timeout",
         type=int,
         default=30,
-        help="Request timeout im seconds (default: 30).",
+        help="Request timeout in seconds (default: 30).",
     )
     return parser
 
@@ -61,11 +61,6 @@ def main() -> int:
         if error_count > 1:
             exit_code = 1
     return exit_code
-
-    test_url = "https://example.com"
-
-    # Exit code convention: 0 = success, non-zero = failure
-    return 1 if error_count else 0
 
 
 if __name__ == "__main__":
