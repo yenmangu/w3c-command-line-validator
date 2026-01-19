@@ -7,6 +7,15 @@ W3C_NU_ENDPOINT = "https://validator.w3.org/nu/"
 
 # 1. Prove the API works
 def validate_one(url: str) -> int:
+    """Validate a single deployed URL's markup
+    Calls the W3C_NU_ENDPOINT with a GET request to validate the markup at the `url`
+
+    Args:
+        url (str): The deployed URL in question
+
+    Returns:
+        int: Number of errors
+    """
     response = requests.get(
         W3C_NU_ENDPOINT, params={"doc": url, "out": "json"}, timeout=30
     )
@@ -30,6 +39,11 @@ def validate_one(url: str) -> int:
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
+    """Builds the command line argument parser.
+
+    Returns:
+        argparse.ArgumentParser: returns an instance of the ArgumentParser class
+    """
     parser = argparse.ArgumentParser(
         prog="w3c-validator",
         description="Validate deployed URLs using the W3C Nu HTML Checker (JSON output).",
@@ -50,7 +64,17 @@ def build_arg_parser() -> argparse.ArgumentParser:
     return parser
 
 
+# TODO: Add count_messages()
+# TODO: Add print_error_messages()
+
+
+# Standard entrypoint convention
 def main() -> int:
+    """Conventional entrypoint for program
+
+    Returns:
+        int: standard exit code convention - 0 = success; non-zero = Error
+    """
     parser = build_arg_parser()
     args = parser.parse_args()
 
@@ -63,5 +87,6 @@ def main() -> int:
     return exit_code
 
 
+# Check code is not being run as part of an import
 if __name__ == "__main__":
     raise SystemExit(main())
