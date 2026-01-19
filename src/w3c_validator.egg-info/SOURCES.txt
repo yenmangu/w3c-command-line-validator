@@ -1,3 +1,5 @@
+LICENSE
+README.md
 pyproject.toml
 src/w3c_validator/__init__.py
 src/w3c_validator/cli.py

@@ -51,9 +51,18 @@ def build_arg_parser() -> argparse.ArgumentParser:
 
 
 def main() -> int:
+    parser = build_arg_parser()
+    args = parser.parse_args()
+
+    exit_code = 0
+
+    for url in args.urls:
+        error_count = validate_one(url)
+        if error_count > 1:
+            exit_code = 1
+    return exit_code
 
     test_url = "https://example.com"
-    error_count = validate_one(test_url)
 
     # Exit code convention: 0 = success, non-zero = failure
     return 1 if error_count else 0
