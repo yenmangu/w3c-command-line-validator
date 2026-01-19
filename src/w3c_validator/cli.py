@@ -100,6 +100,32 @@ def get_location(
     return first_line, last_line, first_col, last_col
 
 
+def collapse_blank_lines(text: str) -> str:
+    """Collapse multiple consecutive blank lines into a single blank line
+    Preserves indentation and non empty lines
+
+    Args:
+        text (str): Input HTML extract
+
+    Returns:
+        str: HTML extract with empty blank lines collapsed
+    """
+
+    lines = text.splitlines()
+
+    normalised_lines: list[str] = []
+
+    for line in lines:
+        is_blank = not line.strip()
+
+        if is_blank:
+            continue
+
+        normalised_lines.append(line.rstrip())
+
+    return "\n".join(normalised_lines)
+
+
 def print_error_messages(payload: dict[str, Any]) -> None:
     """Read and print any error messages from the parsed response JSON payload.
     Downstream expects an iterable, so default from get() is empty list.
@@ -114,7 +140,7 @@ def print_error_messages(payload: dict[str, Any]) -> None:
 
     # Iterate over messages, skipping non error messages
     for m in messages:
-        print(f"type: {m.get("type")}")
+        # print(f"Type: {m.get("type")}")
         if m.get("type") != "error":
             continue
 
@@ -126,32 +152,38 @@ def print_error_messages(payload: dict[str, Any]) -> None:
         ) = get_location(m)
 
         text = (m.get("message") or "").strip()
-        extract = (m.get("extract") or "").strip()
 
-        location_bits: list[str] = []
+        # Use blank lines helper
+        raw_extract = m.get("extract") or ""
+        extract = collapse_blank_lines(raw_extract).strip()
+        # extract = (m.get("extract") or "").strip()
+
+        line_column_coordinates: list[str] = []
         if first_line is not None and last_line is not None:
             if first_line == last_line:
-                location_bits.append(f"line {last_line}")
+                line_column_coordinates.append(f"line {last_line}")
             else:
-                location_bits.append(f"lines {first_line}-{last_line}")
+                line_column_coordinates.append(f"lines {first_line}-{last_line}")
         elif last_line is not None:
-            location_bits.append(f"line {last_line}")
+            line_column_coordinates.append(f"line {last_line}")
 
         if first_col is not None and last_col is not None:
             if first_col == last_col:
-                location_bits.append(f"column: {last_col}")
+                line_column_coordinates.append(f"column: {last_col}")
             else:
-                location_bits.append(f"columns {first_col}-{last_col}")
+                line_column_coordinates.append(f"columns {first_col}-{last_col}")
         elif last_col is not None:
-            location_bits.append(f"column: {last_col}")
+            line_column_coordinates.append(f"column: {last_col}")
 
-        print(location_bits)
-
-        location = f" ({', '.join(location_bits)})" if location_bits else ""
+        location = (
+            f" ({', '.join(line_column_coordinates)})"
+            if line_column_coordinates
+            else ""
+        )
         print(f"    - ERROR{location}: {text}")
 
         if extract:
-            print(f"      Extract: {extract}")
+            print(f"      Extract: \n{extract}\n")
 
     # TODO: Location helper, refactor to use location helper
 
@@ -181,7 +213,6 @@ def validate_one(url: str, *, timeout_seconds: int) -> int:
     )
 
     if counts.errors:
-        print("printing error messages")
         print_error_messages(payload)
 
     return 1 if counts.errors else 0
