@@ -12,7 +12,8 @@ W3C_NU_ENDPOINT = "https://validator.w3.org/nu/"
 @dataclass
 class MessageCounts:
     """Lightweight dataclass, with dunders generated automatically
-    through the use of `@dataclass`
+    through the use of `@dataclass`.
+    Holds the number of each type of message from a single URL run.
     """
 
     errors: int
