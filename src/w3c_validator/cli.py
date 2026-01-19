@@ -183,7 +183,7 @@ def print_error_messages(payload: dict[str, Any]) -> None:
         print(f"    - ERROR{location}: {text}")
 
         if extract:
-            print(f"      Extract: \n{extract}\n")
+            print(f"      Extract:\n{extract}\n")
 
     # TODO: Location helper, refactor to use location helper
 
@@ -216,31 +216,6 @@ def validate_one(url: str, *, timeout_seconds: int) -> int:
         print_error_messages(payload)
 
     return 1 if counts.errors else 0
-
-    # Deprecated
-    return
-    response = requests.get(
-        W3C_NU_ENDPOINT, params={"doc": url, "out": "json"}, timeout=30
-    )
-
-    # Raise HTTPError, if one occurs
-    response.raise_for_status()
-
-    # Parse the JSON into payload
-    payload = response.json()
-
-    # Get any and all messages from the payload
-    messages = payload.get("messages", [])
-
-    # Canonical way to count in python. Below is a generator function, the function yields a '1' for every message whose type is "error"
-    # sum(result of generator function)
-    error_count = sum(1 for m in messages if m.get("type") == "error")
-
-    print(url)
-    # Debug raw JSON output
-    # print(response.text)
-    print(f"Errors: {error_count}")
-    return error_count
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
