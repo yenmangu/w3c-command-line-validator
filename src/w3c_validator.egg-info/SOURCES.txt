@@ -1,0 +1,8 @@
+pyproject.toml
+src/w3c_validator/__init__.py
+src/w3c_validator/cli.py
+src/w3c_validator.egg-info/PKG-INFO
+src/w3c_validator.egg-info/SOURCES.txt
+src/w3c_validator.egg-info/dependency_links.txt
+src/w3c_validator.egg-info/requires.txt
+src/w3c_validator.egg-info/top_level.txt
