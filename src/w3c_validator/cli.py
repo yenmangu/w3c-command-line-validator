@@ -48,7 +48,7 @@ def read_from_file(file_path: str) -> list[str]:
 
     path = Path(file_path)
 
-    if not path:
+    if not path.exists():
         raise FileNotFoundError(f"URL file not found: {file_path}")
 
     if not path.is_file():
@@ -298,7 +298,7 @@ def write_full_report(
                 fh.write(f"- ERROR{location}: {text}\n")
 
                 if extract:
-                    fh.write(f"  {extract}:\n")
+                    fh.write(f"  Extract:\n")
                     for line in extract.splitlines():
                         fh.write(f"  {line}\n")
                 fh.write("\n")
@@ -329,19 +329,6 @@ def validate_one(url: str, *, timeout_seconds: int) -> int:
         counts=counts,
         messages=messages,
     )
-
-    # Deprecated
-    print(url)
-    print(
-        f"  Errors: {counts.errors} | "
-        f"Info/Warnings: {counts.infos} | "
-        f"Non-doc: {counts.non_document_errors}"
-    )
-
-    if counts.errors:
-        print_error_messages(payload)
-
-    return 1 if counts.errors else 0
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
@@ -427,7 +414,7 @@ def main() -> int:
     results: list[ValidationResult] = []
     exit_code = 0
 
-    for url in args.urls:
+    for url in deduped_urls:
         result = validate_one(url, timeout_seconds=args.timeout)
         results.append(result)
         if result.counts.errors:
@@ -441,9 +428,9 @@ def main() -> int:
             f"Non-doc: {result.counts.non_document_errors}"
         )
 
-        if args.out:
-            write_full_report(results, output_path=args.out)
-            print(f"\nFull validation report written to: {args.out}")
+    if args.out:
+        write_full_report(results, output_path=args.out)
+        print(f"\nFull validation report written to: {args.out}")
 
     return exit_code
 
