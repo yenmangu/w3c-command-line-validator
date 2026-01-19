@@ -300,7 +300,7 @@ def write_full_report(
                 if extract:
                     fh.write(f"  Extract:\n")
                     for line in extract.splitlines():
-                        fh.write(f"  {line}\n")
+                        fh.write(f"    {line}\n")
                 fh.write("\n")
 
             if result.counts.errors == 0:
