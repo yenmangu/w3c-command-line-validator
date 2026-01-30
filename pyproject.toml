@@ -1,13 +1,37 @@
-# Define metadata
 [project]
-name = "w3c-validator"
+name = "w3c-nu-validator"
 version = "0.1.0"
+description = "CLI tool to validate deployed URLs via the W3C Nu HTML Checker (JSON output)."
+readme = "README.md"
 requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Rob Shelford" }]
+keywords = ["w3c", "html", "validator", "nu", "accessibility", "testing"]
 dependencies = ["requests"]
 
-# Create real executable
+classifiers = [
+	"Development Status :: 3 - Alpha",
+	"Environment :: Console",
+	"Intended Audience :: Developers",
+	"License :: OSI Approved :: MIT License",
+	"Programming Language :: Python :: 3",
+	"Programming Language :: Python :: 3 :: Only",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.12",
+	"Programming Language :: Python :: 3.13",
+	"Topic :: Internet :: WWW/HTTP",
+	"Topic :: Software Development :: Testing",
+	"Topic :: Text Processing :: Markup :: HTML",
+]
+
+[project.urls]
+Homepage = "https://github.com/yenmangu/w3c-validator"
+Repository = "https://github.com/yenmangu/w3c-validator"
+Issues = "https://github.com/yenmangu/w3c-validator/issues"
+
 [project.scripts]
-w3c-validator = "w3c_validator.cli:main"
+w3c-nu-validator = "w3c_validator.cli:main"
 
 [build-system]
 requires = ["setuptools>=68"]

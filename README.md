@@ -1,4 +1,4 @@
-# w3c-validator
+# w3c-nu-validator
 
 A lightweight Python CLI tool for validating **deployed URLs** using the
 **W3C Nu HTML Checker HTTP API** (JSON output).
@@ -38,19 +38,29 @@ This tool allows you to:
 
 ## Installation
 
-Clone the repository and install it into a virtual environment:
+### From PyPI
+
+```bash
+pip install w3c-nu-validator
+```
+
+This installs the `w3c-validator` command.
+
+---
+
+### Editable Install
+
+Clone the repository and install it into a virtual environment.
 
 ```bash
 pip install -e .
 ```
 
-Or install it from another project in editable mode:
+Or install from another project in editable mode:
 
 ```bash
-pip install -e /path/to/w3c-validator
+pip install -e /path/to/w3c-nu-validator
 ```
-
-This registers the `w3c-validator` command via a console script entry point.
 
 ---
 
@@ -62,6 +72,8 @@ This registers the `w3c-validator` command via a console script entry point.
 w3c-validator https://example.com https://example.com/about/
 ```
 
+---
+
 ### Read URLs from a file
 
 ```bash
@@ -71,10 +83,13 @@ w3c-validator -r urls.txt
 File rules:
 
 - one URL per line
-- blank lines ignored
-- lines starting with `#` are ignored
+- blank lines are ignored
+- lines starting with # are ignored
 
 Example `urls.txt`:
+
+> [!NOTE]
+> Lines beginning with hash `#` marks are treated as comments and thus ignored.
 
 ```text
 # Home page
