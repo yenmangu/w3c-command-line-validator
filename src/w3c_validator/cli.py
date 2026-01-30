@@ -338,7 +338,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
         argparse.ArgumentParser: returns an instance of the ArgumentParser class
     """
     parser = argparse.ArgumentParser(
-        prog="w3c-validator",
+        prog="w3c-nu-validator",
         description="Validate deployed URLs using the W3C Nu HTML Checker (JSON output).",
     )
 
