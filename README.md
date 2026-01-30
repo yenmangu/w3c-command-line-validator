@@ -44,7 +44,7 @@ This tool allows you to:
 pip install w3c-nu-validator
 ```
 
-This installs the `w3c-validator` command.
+This installs the `w3c-nu-validator` command.
 
 ---
 
@@ -69,7 +69,7 @@ pip install -e /path/to/w3c-nu-validator
 ### Validate one or more URLs
 
 ```bash
-w3c-validator https://example.com https://example.com/about/
+w3c-nu-validator https://example.com https://example.com/about/
 ```
 
 ---
@@ -77,7 +77,7 @@ w3c-validator https://example.com https://example.com/about/
 ### Read URLs from a file
 
 ```bash
-w3c-validator -r urls.txt
+w3c-nu-validator -r urls.txt
 ```
 
 File rules:
@@ -104,7 +104,7 @@ https://example.com/resources/
 ### Write a full report to a file
 
 ```bash
-w3c-validator -r urls.txt -o report.txt
+w3c-nu-validator -r urls.txt -o report.txt
 ```
 
 The report includes:
@@ -126,7 +126,7 @@ The report includes:
 This allows quick pass/fail checks:
 
 ```bash
-w3c-validator -r urls.txt
+w3c-nu-validator -r urls.txt
 echo $?
 ```
 

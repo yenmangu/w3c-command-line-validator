@@ -1,6 +1,6 @@
 [project]
 name = "w3c-nu-validator"
-version = "0.1.0"
+version = "0.1.1"
 description = "CLI tool to validate deployed URLs via the W3C Nu HTML Checker (JSON output)."
 readme = "README.md"
 requires-python = ">=3.10"
